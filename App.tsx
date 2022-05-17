@@ -1,14 +1,46 @@
 import { NavigationContainer } from "@react-navigation/native"
-import { createNativeStackNavigator } from "@react-navigation/native-stack"
-import { createStackNavigator } from "@react-navigation/stack"
-import { StatusBar } from "expo-status-bar"
-import { StyleSheet, Text, View } from "react-native"
 import "react-native-gesture-handler"
 import HomeScreen from "./screens/homet"
+import { loadAsync } from "expo-font"
+import { ActivityIndicator, View } from "react-native"
+import { BLACK } from "./styles/theme"
+import { useEffect, useState } from "react"
+import { createStackNavigator } from "@react-navigation/stack"
 
-const RootStack = createNativeStackNavigator()
+const RootStack = createStackNavigator()
 
 export default function App() {
+  const [isLoading, setLoading] = useState(true)
+  const getFont = async () => {
+    await loadAsync({
+      PretendardBold: require("./assets/fonts/Pretendard-Bold.otf"),
+      PretendardLight: require("./assets/fonts/Pretendard-Light.otf"),
+      PretendardMedium: require("./assets/fonts/Pretendard-Medium.otf"),
+      PretendardRegular: require("./assets/fonts/Pretendard-Regular.otf"),
+    })
+  }
+  const loadAssets = async () => {
+    await getFont()
+  }
+
+  useEffect(() => {
+    loadAssets().then(() => setLoading(false))
+  }, [])
+
+  if (isLoading)
+    return (
+      <View
+        style={{
+          flex: 1,
+          alignItems: "center",
+          justifyContent: "center",
+          backgroundColor: BLACK,
+        }}
+      >
+        <ActivityIndicator size="large" />
+      </View>
+    )
+
   return (
     <NavigationContainer>
       <RootStack.Navigator
