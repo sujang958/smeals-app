@@ -1,16 +1,16 @@
 import { FC } from "react"
 import { ScrollView, TouchableOpacity, View } from "react-native"
+import { RootStackScreenProps } from "../App"
 import Text from "../components/text"
 
 import HomeStyles from "../styles/homeStyles"
-import { BLACK } from "../styles/theme"
 
-const HomeScreen: FC = () => {
+const HomeScreen: FC<RootStackScreenProps<"Home">> = ({ navigation }) => {
   return (
     <View style={HomeStyles.container}>
       <View style={HomeStyles.header}>
         <Text style={HomeStyles.titleText}>급식</Text>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.navigate("Search")}>
           <Text style={HomeStyles.plusText}>+</Text>
         </TouchableOpacity>
       </View>

@@ -3,11 +3,20 @@ import "react-native-gesture-handler"
 import HomeScreen from "./screens/homet"
 import { loadAsync } from "expo-font"
 import { ActivityIndicator, View } from "react-native"
-import { BLACK } from "./styles/theme"
+import { BLACK, WHITE } from "./styles/theme"
 import { useEffect, useState } from "react"
-import { createStackNavigator } from "@react-navigation/stack"
+import { createStackNavigator, StackScreenProps } from "@react-navigation/stack"
+import SearchScreen from "./screens/search"
 
-const RootStack = createStackNavigator()
+type RootStackParamList = {
+  Home: undefined
+  Search: undefined
+}
+
+export type RootStackScreenProps<T extends keyof RootStackParamList> =
+  StackScreenProps<RootStackParamList, T>
+
+const RootStack = createStackNavigator<RootStackParamList>()
 
 export default function App() {
   const [isLoading, setLoading] = useState(true)
@@ -48,6 +57,16 @@ export default function App() {
         screenOptions={{ headerShown: false }}
       >
         <RootStack.Screen name="Home" component={HomeScreen} />
+        <RootStack.Screen
+          name="Search"
+          component={SearchScreen}
+          options={{
+            headerStyle: { backgroundColor: BLACK },
+            headerTitle: "검색",
+            headerTitleStyle: { color: WHITE },
+            headerShown: true,
+          }}
+        />
       </RootStack.Navigator>
     </NavigationContainer>
   )
