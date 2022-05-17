@@ -60,11 +60,11 @@ const HomeStyles = StyleSheet.create({
   },
   mealItem: {
     flex: 1,
-    paddingVertical: 22,
+    paddingVertical: 24,
   },
   mealItemTitle: {
     color: BLACK,
-    fontSize: 17.2,
+    fontSize: 17,
     fontFamily: "PretendardMedium",
   },
   mealItemContentContainer: {

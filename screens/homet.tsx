@@ -20,7 +20,10 @@ const HomeScreen: FC = () => {
         showsVerticalScrollIndicator
         contentContainerStyle={HomeStyles.body}
       >
-        <View style={HomeStyles.schoolContainer}>
+        <TouchableOpacity
+          activeOpacity={0.7}
+          style={HomeStyles.schoolContainer}
+        >
           <View style={HomeStyles.schoolItem}>
             <Text style={HomeStyles.schoolTitle}>대구동중학교</Text>
             <View style={HomeStyles.mealContainer}>
@@ -63,12 +66,7 @@ const HomeScreen: FC = () => {
               </View>
             </View>
           </View>
-        </View>
-        <View style={HomeStyles.schoolContainer}>
-          <View style={HomeStyles.schoolItem}>
-            <Text>hi</Text>
-          </View>
-        </View>
+        </TouchableOpacity>
       </ScrollView>
     </View>
   )
