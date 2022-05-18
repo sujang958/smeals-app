@@ -9,10 +9,12 @@ import { createStackNavigator, StackScreenProps } from "@react-navigation/stack"
 import SearchScreen, { TResult } from "./screens/search"
 import AsyncStorage from "@react-native-async-storage/async-storage"
 import SchoolsContext from "./contexts/schools"
+import MealDetailsScreen from "./screens/mealDetails"
 
 type RootStackParamList = {
   Home: undefined
   Search: undefined
+  MealDetails: TResult
 }
 
 export type RootStackScreenProps<T extends keyof RootStackParamList> =
@@ -110,6 +112,16 @@ export default function App() {
             options={{
               headerStyle: { backgroundColor: BLACK },
               headerTitle: "검색",
+              headerTitleStyle: { color: WHITE },
+              headerShown: true,
+            }}
+          />
+          <RootStack.Screen
+            name="MealDetails"
+            component={MealDetailsScreen}
+            options={{
+              headerStyle: { backgroundColor: BLACK },
+              headerTitle: "급식 정보",
               headerTitleStyle: { color: WHITE },
               headerShown: true,
             }}

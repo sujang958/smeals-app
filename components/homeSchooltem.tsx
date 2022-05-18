@@ -12,12 +12,15 @@ export type THomeSchoolMeal = {
   calories: string
 }
 
-const dateToYYYYMMDD = (date: Date) =>
+export const dateToYYYYMMDD = (date: Date) =>
   date.toJSON().split("T")[0].replace(/-/gi, "")
 
 const HomeSchoolItem: FC<
-  TResult & { deleteSchool: (school: TResult) => Promise<void> }
-> = ({ name, scCode, code, deleteSchool }) => {
+  TResult & {
+    deleteSchool: (school: TResult) => Promise<void>
+    viewDetails: (school: TResult) => void
+  }
+> = ({ name, scCode, code, deleteSchool, viewDetails }) => {
   const [date, setDate] = useState(new Date())
   const [isLoading, setLoading] = useState(true)
   const [meals, setMeals] = useState<THomeSchoolMeal[]>([])
@@ -80,6 +83,7 @@ const HomeSchoolItem: FC<
     <TouchableOpacity
       delayLongPress={2000}
       onLongPress={askToDelete}
+      onPress={() => viewDetails({ code, name, scCode })}
       activeOpacity={0.7}
       style={HomeStyles.schoolContainer}
     >

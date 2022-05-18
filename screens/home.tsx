@@ -79,7 +79,14 @@ const HomeScreen: FC<RootStackScreenProps<"Home">> = ({ navigation }) => {
           </View>
         ) : (
           schools.map((school, i) => (
-            <HomeSchoolItem {...school} key={i} deleteSchool={deleteSchool} />
+            <HomeSchoolItem
+              {...school}
+              key={i}
+              deleteSchool={deleteSchool}
+              viewDetails={(school) =>
+                navigation.navigate("MealDetails", school)
+              }
+            />
           ))
         )}
       </ScrollView>
