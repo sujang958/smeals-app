@@ -1,4 +1,4 @@
-import { FC, useState } from "react"
+import { FC, useContext, useState } from "react"
 import {
   ActivityIndicator,
   Alert,
@@ -15,6 +15,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage"
 import useInput from "../hooks/useInput"
 import api from "../utils/api"
 import { AxiosError } from "axios"
+import SchoolsContext from "../contexts/schools"
 
 export type TResult = {
   code: string
@@ -23,6 +24,7 @@ export type TResult = {
 }
 
 const SearchScreen: FC = () => {
+  const { schools, dispatch } = useContext(SchoolsContext)
   const [isLoading, setLoading] = useState(false)
   const [results, setResults] = useState<TResult[]>([])
   const [query, onInputChange] = useInput()
@@ -60,23 +62,7 @@ const SearchScreen: FC = () => {
   }
   const addToStorage = async (school: TResult) => {
     setLoading(true)
-    const previous: TResult[] = JSON.parse(
-      (await AsyncStorage.getItem("schools")) ?? "[]"
-    )
-    await AsyncStorage.setItem(
-      "schools",
-      JSON.stringify(
-        [
-          ...previous,
-          previous.findIndex(
-            ({ code, scCode }) =>
-              code === school.code && scCode === school.scCode
-          ) < 0
-            ? school
-            : null,
-        ].filter((school) => school)
-      )
-    )
+    dispatch({ type: "ADD_SCHOOL", school })
     setLoading(false)
     Alert.alert("200 :)", "추가했습니다!")
   }

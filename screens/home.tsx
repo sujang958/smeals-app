@@ -1,5 +1,5 @@
 import AsyncStorage from "@react-native-async-storage/async-storage"
-import { FC, useEffect, useState } from "react"
+import { FC, useContext, useEffect, useState } from "react"
 import {
   ActivityIndicator,
   ScrollView,
@@ -9,6 +9,7 @@ import {
 import { RootStackScreenProps } from "../App"
 import HomeSchoolItem from "../components/homeSchooltem"
 import Text from "../components/text"
+import SchoolsContext from "../contexts/schools"
 
 import HomeStyles from "../styles/homeStyles"
 import { SCREEN_WIDTH } from "../styles/theme"
@@ -16,54 +17,28 @@ import { TResult } from "./search"
 
 const HomeScreen: FC<RootStackScreenProps<"Home">> = ({ navigation }) => {
   const [isLoading, setLoading] = useState(true)
-  const [schools, setSchools] = useState<TResult[]>([])
+  const { schools, dispatch } = useContext(SchoolsContext)
   const deleteSchool = async (school: TResult) => {
     setLoading(true)
-    setSchools((previous) => [
-      ...previous.filter(
-        ({ name, scCode, code }) =>
-          name !== school.name &&
-          scCode !== school.scCode &&
-          code !== school.code
-      ),
-    ])
+    dispatch({ type: "DELETE_SCHOOL", school })
     setLoading(false)
   }
   const setSchoolsFromStore = async () => {
     setLoading(true)
-    setSchools(JSON.parse((await AsyncStorage.getItem("schools")) ?? "[]"))
+    dispatch({
+      type: "SET_SCHOOL",
+      schools: JSON.parse((await AsyncStorage.getItem("schools")) ?? "[]"),
+    })
     setLoading(false)
-  }
-  const syncSchoolsWithState = async () => {
-    const storageSchools: TResult[] = JSON.parse(
-      (await AsyncStorage.getItem("schools")) ?? "[]"
-    )
-    await AsyncStorage.setItem(
-      "schools",
-      JSON.stringify(
-        storageSchools.filter((storageSchool) =>
-          schools.find(
-            ({ name, scCode, code }) =>
-              name === storageSchool.name &&
-              scCode === storageSchool.scCode &&
-              code === storageSchool.code
-          )
-        )
-      )
-    )
   }
 
   useEffect(() => {
     setSchoolsFromStore()
-    const focusToUpdateSchools = () => {
-      setSchoolsFromStore()
-    }
+    const focusToUpdateSchools = () => setSchoolsFromStore()
     navigation.addListener("focus", focusToUpdateSchools)
     return () => navigation.removeListener("focus", focusToUpdateSchools)
   }, [])
-  useEffect(() => {
-    syncSchoolsWithState()
-  }, [schools])
+  useEffect(() => {}, [schools])
 
   return (
     <View style={HomeStyles.container}>
@@ -88,6 +63,19 @@ const HomeScreen: FC<RootStackScreenProps<"Home">> = ({ navigation }) => {
             }}
           >
             <ActivityIndicator size="large" />
+          </View>
+        ) : schools.length < 1 ? (
+          <View
+            style={{
+              width: SCREEN_WIDTH,
+              alignItems: "center",
+              justifyContent: "center",
+              marginTop: -54,
+            }}
+          >
+            <Text style={{ fontSize: 20 }}>
+              + 버튼을 클릭해 학교를 추가 해 보세요!
+            </Text>
           </View>
         ) : (
           schools.map((school, i) => (

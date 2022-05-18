@@ -1,5 +1,5 @@
 import { AxiosError } from "axios"
-import { FC, useEffect, useState } from "react"
+import { FC, useEffect, useRef, useState } from "react"
 import { ActivityIndicator, Alert, TouchableOpacity, View } from "react-native"
 import { TResult } from "../screens/search"
 import HomeStyles from "../styles/homeStyles"
@@ -110,7 +110,11 @@ const HomeSchoolItem: FC<
                 <View style={HomeStyles.mealItemContentContainer}>
                   {meal.map((dish, j) => (
                     <Text key={j} style={HomeStyles.mealItemContentText}>
-                      {dish.replace(/\(.+?\)/gi, "").trim()},
+                      {dish
+                        .replace(/\(.+?\)/gi, "")
+                        .replace(/\*/gi, "")
+                        .trim()}
+                      ,
                     </Text>
                   ))}
                 </View>

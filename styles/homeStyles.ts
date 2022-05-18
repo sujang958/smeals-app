@@ -29,7 +29,7 @@ const HomeStyles = StyleSheet.create({
     width: SCREEN_WIDTH,
     height: "100%",
     paddingHorizontal: 34,
-    paddingTop: 80,
+    paddingTop: 44,
     paddingBottom: 168,
     flex: 1,
   },
@@ -62,7 +62,7 @@ const HomeStyles = StyleSheet.create({
   },
   mealItem: {
     flex: 1,
-    paddingVertical: 24,
+    paddingVertical: 22,
   },
   mealItemTitle: {
     color: BLACK,
@@ -71,7 +71,7 @@ const HomeStyles = StyleSheet.create({
   },
   mealItemContentContainer: {
     flexDirection: "row",
-    paddingVertical: 12,
+    paddingVertical: 8,
     flexWrap: "wrap",
     alignItems: "center",
   },
