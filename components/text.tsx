@@ -2,7 +2,7 @@ import { FC } from "react"
 import { Text as RNText, TextStyle } from "react-native"
 import { BaseTextStyles } from "../styles/theme"
 
-const Text: FC<{ children: string; style?: TextStyle }> = ({
+const Text: FC<{ children: any; style?: TextStyle }> = ({
   children,
   style,
 }) => {

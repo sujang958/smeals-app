@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from "react"
+import { FC, useState } from "react"
 import {
   ActivityIndicator,
   Alert,
@@ -16,7 +16,7 @@ import useInput from "../hooks/useInput"
 import api from "../utils/api"
 import { AxiosError } from "axios"
 
-type TResult = {
+export type TResult = {
   code: string
   scCode: string
   name: string
@@ -30,7 +30,7 @@ const SearchScreen: FC = () => {
     Keyboard.dismiss()
     setLoading(true)
     try {
-      const { data, status } = await api.get("/schools", {
+      const { data } = await api.get("/schools", {
         params: { name: query },
       })
       setResults(
@@ -45,9 +45,11 @@ const SearchScreen: FC = () => {
         const statusCode: number = (e.toJSON() as any).status
         switch (statusCode) {
           case 404:
-            Alert.alert("404 :(", "학교를 찾을 수 없습니다!")
-          case 400:
-            Alert.alert("400 :(", "잘못된 요청입니다!")
+            Alert.alert("404 :(", "학교를 찾을 수 없습니다!", [
+              { text: "저런!" },
+            ])
+          // case 400:
+          //   Alert.alert("400 :(", "잘못된 요청입니다!")
         }
       } else {
         alert("알 수 없는 에러가 발생했습니다!")

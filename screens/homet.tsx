@@ -1,11 +1,70 @@
-import { FC } from "react"
-import { ScrollView, TouchableOpacity, View } from "react-native"
+import AsyncStorage from "@react-native-async-storage/async-storage"
+import { FC, useEffect, useState } from "react"
+import {
+  ActivityIndicator,
+  ScrollView,
+  TouchableOpacity,
+  View,
+} from "react-native"
 import { RootStackScreenProps } from "../App"
+import HomeSchoolItem from "../components/homeSchooltem"
 import Text from "../components/text"
 
 import HomeStyles from "../styles/homeStyles"
+import { SCREEN_WIDTH } from "../styles/theme"
+import { TResult } from "./search"
 
 const HomeScreen: FC<RootStackScreenProps<"Home">> = ({ navigation }) => {
+  const [isLoading, setLoading] = useState(true)
+  const [schools, setSchools] = useState<TResult[]>([])
+  const deleteSchool = async (school: TResult) => {
+    setLoading(true)
+    setSchools((previous) => [
+      ...previous.filter(
+        ({ name, scCode, code }) =>
+          name !== school.name &&
+          scCode !== school.scCode &&
+          code !== school.code
+      ),
+    ])
+    setLoading(false)
+  }
+  const setSchoolsFromStore = async () => {
+    setLoading(true)
+    setSchools(JSON.parse((await AsyncStorage.getItem("schools")) ?? "[]"))
+    setLoading(false)
+  }
+  const syncSchoolsWithState = async () => {
+    const storageSchools: TResult[] = JSON.parse(
+      (await AsyncStorage.getItem("schools")) ?? "[]"
+    )
+    await AsyncStorage.setItem(
+      "schools",
+      JSON.stringify(
+        storageSchools.filter((storageSchool) =>
+          schools.find(
+            ({ name, scCode, code }) =>
+              name === storageSchool.name &&
+              scCode === storageSchool.scCode &&
+              code === storageSchool.code
+          )
+        )
+      )
+    )
+  }
+
+  useEffect(() => {
+    setSchoolsFromStore()
+    const focusToUpdateSchools = () => {
+      setSchoolsFromStore()
+    }
+    navigation.addListener("focus", focusToUpdateSchools)
+    return () => navigation.removeListener("focus", focusToUpdateSchools)
+  }, [])
+  useEffect(() => {
+    syncSchoolsWithState()
+  }, [schools])
+
   return (
     <View style={HomeStyles.container}>
       <View style={HomeStyles.header}>
@@ -20,53 +79,21 @@ const HomeScreen: FC<RootStackScreenProps<"Home">> = ({ navigation }) => {
         showsVerticalScrollIndicator
         contentContainerStyle={HomeStyles.body}
       >
-        <TouchableOpacity
-          activeOpacity={0.7}
-          style={HomeStyles.schoolContainer}
-        >
-          <View style={HomeStyles.schoolItem}>
-            <Text style={HomeStyles.schoolTitle}>대구동중학교</Text>
-            <View style={HomeStyles.mealContainer}>
-              <Text style={HomeStyles.mealTitle}>5월 28일(오늘)</Text>
-              <View style={HomeStyles.mealItem}>
-                <Text style={HomeStyles.mealItemTitle}>조식 - 628 kcal</Text>
-                <View style={HomeStyles.mealItemContentContainer}>
-                  <Text style={HomeStyles.mealItemContentText}>스파게티,</Text>
-                  <Text style={HomeStyles.mealItemContentText}>피자,</Text>
-                  <Text style={HomeStyles.mealItemContentText}>
-                    카망베르치즈,
-                  </Text>
-                  <Text style={HomeStyles.mealItemContentText}>발르슈트,</Text>
-                  <Text style={HomeStyles.mealItemContentText}>리코타치즈</Text>
-                </View>
-              </View>
-              <View style={HomeStyles.mealItem}>
-                <Text style={HomeStyles.mealItemTitle}>조식 - 628 kcal</Text>
-                <View style={HomeStyles.mealItemContentContainer}>
-                  <Text style={HomeStyles.mealItemContentText}>스파게티,</Text>
-                  <Text style={HomeStyles.mealItemContentText}>피자,</Text>
-                  <Text style={HomeStyles.mealItemContentText}>
-                    카망베르치즈,
-                  </Text>
-                  <Text style={HomeStyles.mealItemContentText}>발르슈트,</Text>
-                  <Text style={HomeStyles.mealItemContentText}>리코타치즈</Text>
-                </View>
-              </View>
-              <View style={HomeStyles.mealItem}>
-                <Text style={HomeStyles.mealItemTitle}>조식 - 628 kcal</Text>
-                <View style={HomeStyles.mealItemContentContainer}>
-                  <Text style={HomeStyles.mealItemContentText}>스파게티,</Text>
-                  <Text style={HomeStyles.mealItemContentText}>피자,</Text>
-                  <Text style={HomeStyles.mealItemContentText}>
-                    카망베르치즈,
-                  </Text>
-                  <Text style={HomeStyles.mealItemContentText}>발르슈트,</Text>
-                  <Text style={HomeStyles.mealItemContentText}>리코타치즈</Text>
-                </View>
-              </View>
-            </View>
+        {isLoading ? (
+          <View
+            style={{
+              width: SCREEN_WIDTH,
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <ActivityIndicator size="large" />
           </View>
-        </TouchableOpacity>
+        ) : (
+          schools.map((school, i) => (
+            <HomeSchoolItem {...school} key={i} deleteSchool={deleteSchool} />
+          ))
+        )}
       </ScrollView>
     </View>
   )

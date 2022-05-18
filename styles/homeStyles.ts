@@ -40,11 +40,16 @@ const HomeStyles = StyleSheet.create({
     paddingHorizontal: 24,
     paddingVertical: 25,
   },
+  schoolTitleContainer: {
+    flexDirection: "row",
+    paddingBottom: 10,
+  },
   schoolTitle: {
     flex: 1,
     color: BLACK,
     fontSize: 30,
     fontFamily: "PretendardBold",
+    flexShrink: 1,
   },
   mealContainer: {
     flex: 8,
