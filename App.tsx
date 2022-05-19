@@ -10,11 +10,13 @@ import SearchScreen, { TResult } from "./screens/search"
 import AsyncStorage from "@react-native-async-storage/async-storage"
 import SchoolsContext from "./contexts/schools"
 import MealDetailsScreen from "./screens/mealDetails"
+import OSSSCreen from "./screens/oss"
 
 type RootStackParamList = {
   Home: undefined
   Search: undefined
   MealDetails: TResult
+  OSS: undefined
 }
 
 export type RootStackScreenProps<T extends keyof RootStackParamList> =
@@ -122,6 +124,15 @@ export default function App() {
             options={{
               headerStyle: { backgroundColor: BLACK },
               headerTitle: "급식 정보",
+              headerTitleStyle: { color: WHITE },
+              headerShown: true,
+            }}
+          />
+          <RootStack.Screen
+            name="OSS"
+            component={OSSSCreen}
+            options={{
+              headerStyle: { backgroundColor: BLACK },
               headerTitleStyle: { color: WHITE },
               headerShown: true,
             }}

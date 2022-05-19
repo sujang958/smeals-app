@@ -10,6 +10,7 @@ import { RootStackScreenProps } from "../App"
 import HomeSchoolItem from "../components/homeSchooltem"
 import Text from "../components/text"
 import SchoolsContext from "../contexts/schools"
+import { AntDesign } from "@expo/vector-icons"
 
 import HomeStyles from "../styles/homeStyles"
 import { SCREEN_WIDTH } from "../styles/theme"
@@ -44,9 +45,17 @@ const HomeScreen: FC<RootStackScreenProps<"Home">> = ({ navigation }) => {
     <View style={HomeStyles.container}>
       <View style={HomeStyles.header}>
         <Text style={HomeStyles.titleText}>급식</Text>
-        <TouchableOpacity onPress={() => navigation.navigate("Search")}>
-          <Text style={HomeStyles.plusText}>+</Text>
-        </TouchableOpacity>
+        <View style={HomeStyles.headerButtonContainer}>
+          <TouchableOpacity
+            onPress={() => navigation.navigate("OSS")}
+            style={{ marginRight: 24, marginTop: 4 }}
+          >
+            <AntDesign name="info" size={40} color="white" />
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => navigation.navigate("Search")}>
+            <Text style={HomeStyles.plusText}>+</Text>
+          </TouchableOpacity>
+        </View>
       </View>
       <ScrollView
         horizontal

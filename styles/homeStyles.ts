@@ -17,6 +17,10 @@ const HomeStyles = StyleSheet.create({
     fontSize: 44,
     fontFamily: "PretendardBold",
   },
+  headerButtonContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
   plusText: {
     fontSize: 48,
     fontFamily: "PretendardMedium",
