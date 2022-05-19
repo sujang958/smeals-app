@@ -4,7 +4,7 @@ import { WHITE } from "./theme"
 const MealDetailStyles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingTop: 116,
+    paddingTop: 82,
     paddingBottom: 36,
     paddingHorizontal: 32,
     backgroundColor: "#000",
@@ -22,7 +22,7 @@ const MealDetailStyles = StyleSheet.create({
     fontFamily: "PretendardMedium",
   },
   body: {
-    paddingVertical: 42,
+    paddingVertical: 30,
     paddingHorizontal: 10,
   },
   dateTitle: {
@@ -30,7 +30,7 @@ const MealDetailStyles = StyleSheet.create({
     fontFamily: "PretendardMedium",
   },
   mealItem: {
-    paddingVertical: 14,
+    paddingVertical: 16,
   },
   mealDishContainer: {
     paddingVertical: 2,
