@@ -1,4 +1,4 @@
-import { FC, useContext, useState } from "react"
+import { FC, useContext, useEffect, useState } from "react"
 import {
   ActivityIndicator,
   Alert,
@@ -33,7 +33,7 @@ const SearchScreen: FC = () => {
     setLoading(true)
     try {
       const { data } = await api.get("/schools", {
-        params: { name: query },
+        params: { name: query.length < 1 ? "고등" : query },
       })
       setResults(
         data.schools.map(({ code, scCode, name }: any) => ({
@@ -66,6 +66,10 @@ const SearchScreen: FC = () => {
     setLoading(false)
     Alert.alert("200 :)", "추가했습니다!")
   }
+
+  useEffect(() => {
+    search()
+  }, [])
 
   return (
     <View style={SearchStyles.container}>

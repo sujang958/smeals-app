@@ -1,5 +1,11 @@
 import { FC, useEffect, useState } from "react"
-import { ActivityIndicator, ScrollView, View } from "react-native"
+import {
+  ActivityIndicator,
+  Platform,
+  ScrollView,
+  TouchableOpacity,
+  View,
+} from "react-native"
 import { RootStackScreenProps } from "../App"
 import Text from "../components/text"
 import MealDetailStyles from "../styles/mealDetailStyles"
@@ -7,7 +13,7 @@ import DateTimePicker from "@react-native-community/datetimepicker"
 import { dateToYYYYMMDD, THomeSchoolMeal } from "../components/homeSchooltem"
 import api from "../utils/api"
 import { AxiosError } from "axios"
-import { SCREEN_HEIGHT } from "../styles/theme"
+import { BLACK, SCREEN_HEIGHT, WHITE } from "../styles/theme"
 
 const MealDetailsScreen: FC<RootStackScreenProps<"MealDetails">> = ({
   route,
@@ -15,6 +21,7 @@ const MealDetailsScreen: FC<RootStackScreenProps<"MealDetails">> = ({
   const [date, setDate] = useState(new Date())
   const [isLoading, setLoading] = useState(true)
   const [meals, setMeals] = useState<THomeSchoolMeal[]>([])
+  const [isShown, setShown] = useState(Platform.OS === "android" ? false : true)
   const loadMeals = async () => {
     setLoading(true)
     try {
@@ -63,16 +70,33 @@ const MealDetailsScreen: FC<RootStackScreenProps<"MealDetails">> = ({
         <Text style={MealDetailStyles.headerTitle}>{route.params.name}</Text>
         <Text style={MealDetailStyles.headerTitle2}>급식 정보</Text>
       </View>
-      <DateTimePicker
-        locale="ko"
-        value={date}
-        mode="date"
-        themeVariant="dark"
-        display="compact"
-        onChange={({ nativeEvent: { timestamp } }) =>
-          setDate(new Date(timestamp ?? Date.now()))
-        }
-      />
+      {Platform.OS === "android" && (
+        <TouchableOpacity onPress={() => setShown((prev) => !prev)}>
+          <Text
+            style={{
+              fontFamily: "PretendardMedium",
+              fontSize: 18,
+              paddingVertical: 6,
+            }}
+          >
+            날짜 선택하기
+          </Text>
+        </TouchableOpacity>
+      )}
+
+      {isShown && (
+        <DateTimePicker
+          locale="ko"
+          value={date}
+          mode="date"
+          themeVariant="dark"
+          {...(Platform.OS !== "android" && { display: "compact" })}
+          onChange={({ nativeEvent: { timestamp } }: any) => {
+            if (Platform.OS === "android") setShown(false)
+            setDate(new Date(timestamp))
+          }}
+        />
+      )}
       <ScrollView contentContainerStyle={MealDetailStyles.body}>
         <Text style={MealDetailStyles.dateTitle}>
           {`${date.getMonth() + 1}월 ${date.getDate()}일`}
