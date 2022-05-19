@@ -19,6 +19,8 @@ type RootStackParamList = {
   OSS: undefined
 }
 
+// todo: isloate typing
+
 export type RootStackScreenProps<T extends keyof RootStackParamList> =
   StackScreenProps<RootStackParamList, T>
 
