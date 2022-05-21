@@ -17,6 +17,8 @@ import api from "../utils/api"
 import { AxiosError } from "axios"
 import SchoolsContext from "../contexts/schools"
 
+import * as Haptics from "expo-haptics"
+
 export type TResult = {
   code: string
   scCode: string
@@ -35,6 +37,7 @@ const SearchScreen: FC = () => {
       const { data } = await api.get("/schools", {
         params: { name: query.length < 1 ? "고등" : query },
       })
+      Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium)
       setResults(
         data.schools.map(({ code, scCode, name }: any) => ({
           code,
@@ -64,6 +67,7 @@ const SearchScreen: FC = () => {
     setLoading(true)
     dispatch({ type: "ADD_SCHOOL", school })
     setLoading(false)
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium)
     Alert.alert("200 :)", "추가했습니다!")
   }
 

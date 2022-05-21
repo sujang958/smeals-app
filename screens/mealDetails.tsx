@@ -4,6 +4,7 @@ import {
   Platform,
   Pressable,
   ScrollView,
+  Vibration,
   View,
 } from "react-native"
 import { RootStackScreenProps } from "../App"
@@ -13,7 +14,8 @@ import DateTimePicker from "@react-native-community/datetimepicker"
 import { dateToYYYYMMDD, THomeSchoolMeal } from "../components/homeSchooltem"
 import api from "../utils/api"
 import { AxiosError } from "axios"
-import { BLACK, SCREEN_HEIGHT, WHITE } from "../styles/theme"
+import { SCREEN_HEIGHT } from "../styles/theme"
+import * as Haptics from "expo-haptics"
 
 const MealDetailsScreen: FC<RootStackScreenProps<"MealDetails">> = ({
   route,
@@ -32,6 +34,7 @@ const MealDetailsScreen: FC<RootStackScreenProps<"MealDetails">> = ({
           date: dateToYYYYMMDD(date),
         },
       })
+      Haptics.selectionAsync()
       setMeals(
         data.meals.map(({ type, meal, calories }: any) => ({
           type,
