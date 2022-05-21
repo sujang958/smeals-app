@@ -1,6 +1,10 @@
 import { StyleSheet } from "react-native"
 
 const OSSStyles = StyleSheet.create({
+  container: {
+    paddingVertical: 24,
+    paddingHorizontal: 20,
+  },
   OSSItemContainer: {
     paddingVertical: 10,
   },
@@ -10,11 +14,15 @@ const OSSStyles = StyleSheet.create({
   OSSItemVersion: {
     fontSize: 16,
   },
+  OSSItemLicense: {
+    fontSize: 16,
+  },
   OSSItemLicenseContainer: {
-    flexDirection: "row",
-    padding: 6,
+    paddingVertical: 2,
+    paddingHorizontal: 6,
     backgroundColor: "#111",
-    marginTop: 6,
+    marginTop: 12,
+    borderRadius: 6,
   },
 })
 

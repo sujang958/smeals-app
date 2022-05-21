@@ -11,6 +11,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage"
 import SchoolsContext from "./contexts/schools"
 import MealDetailsScreen from "./screens/mealDetails"
 import OSSSCreen from "./screens/oss"
+import { StatusBar } from "expo-status-bar"
 
 type RootStackParamList = {
   Home: undefined
@@ -104,6 +105,7 @@ export default function App() {
 
   return (
     <NavigationContainer>
+      <StatusBar style="light" />
       <SchoolsContext.Provider value={{ schools, dispatch }}>
         <RootStack.Navigator
           initialRouteName="Home"

@@ -21,8 +21,8 @@
     },
     "android": {
       "package": "co.smeals.app",
-      "versionCode": 2,
-      "permissions": []
+      "versionCode": 3,
+      "permissions": ["VIBRATE"]
     }
   }
 }

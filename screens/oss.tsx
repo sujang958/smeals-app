@@ -22,13 +22,13 @@ const OSSSCreen: FC = () => {
             {this.props.oss.libraryName}
           </Text>
           <Text style={OSSStyles.OSSItemVersion}>{this.props.oss.version}</Text>
+          <Text style={OSSStyles.OSSItemLicense}>
+            {typeof this.props.oss._license === "string"
+              ? this.props.oss._license
+              : `${this.props.oss._license.type} ${this.props.oss._license.url}`}
+          </Text>
           <View style={OSSStyles.OSSItemLicenseContainer}>
-            <Text>
-              {typeof this.props.oss._license === "string"
-                ? this.props.oss._license
-                : `${this.props.oss._license.type} ${this.props.oss._license.url}`}
-              {this.props.oss._licenseContent ?? ""}
-            </Text>
+            <Text>{this.props.oss._licenseContent ?? ""}</Text>
           </View>
         </View>
       )
@@ -36,14 +36,12 @@ const OSSSCreen: FC = () => {
   }
 
   return (
-    <SafeAreaView>
-      <View
-        style={{
-          backgroundColor: BLACK,
-          paddingVertical: 24,
-          paddingHorizontal: 20,
-        }}
-      >
+    <SafeAreaView
+      style={{
+        backgroundColor: BLACK,
+      }}
+    >
+      <View style={OSSStyles.container}>
         <FlatList
           data={OSSES}
           renderItem={({ item }) => {
