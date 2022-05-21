@@ -2,8 +2,8 @@ import { FC, useEffect, useState } from "react"
 import {
   ActivityIndicator,
   Platform,
+  Pressable,
   ScrollView,
-  TouchableOpacity,
   View,
 } from "react-native"
 import { RootStackScreenProps } from "../App"
@@ -71,17 +71,12 @@ const MealDetailsScreen: FC<RootStackScreenProps<"MealDetails">> = ({
         <Text style={MealDetailStyles.headerTitle2}>급식 정보</Text>
       </View>
       {Platform.OS === "android" && (
-        <TouchableOpacity onPress={() => setShown((prev) => !prev)}>
-          <Text
-            style={{
-              fontFamily: "PretendardMedium",
-              fontSize: 18,
-              paddingVertical: 6,
-            }}
-          >
-            날짜 선택하기
-          </Text>
-        </TouchableOpacity>
+        <Pressable
+          style={MealDetailStyles.androidDatePicker}
+          onPress={() => setShown((prev) => !prev)}
+        >
+          <Text style={{ fontFamily: "PretendardMedium" }}>날짜 선택하기</Text>
+        </Pressable>
       )}
 
       {isShown && (
@@ -92,6 +87,7 @@ const MealDetailsScreen: FC<RootStackScreenProps<"MealDetails">> = ({
           themeVariant="dark"
           {...(Platform.OS !== "android" && { display: "compact" })}
           onChange={({ nativeEvent: { timestamp } }: any) => {
+            if (!timestamp) return
             if (Platform.OS === "android") setShown(false)
             setDate(new Date(timestamp))
           }}

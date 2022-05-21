@@ -1,5 +1,5 @@
 import { StyleSheet } from "react-native"
-import { WHITE } from "./theme"
+import { BLACK, WHITE } from "./theme"
 
 const MealDetailStyles = StyleSheet.create({
   container: {
@@ -24,6 +24,13 @@ const MealDetailStyles = StyleSheet.create({
   body: {
     paddingVertical: 30,
     paddingHorizontal: 10,
+  },
+  androidDatePicker: {
+    borderRadius: 12,
+    paddingVertical: 3,
+    paddingHorizontal: 6,
+    backgroundColor: "#333",
+    alignSelf: "flex-end",
   },
   dateTitle: {
     fontSize: 24,
