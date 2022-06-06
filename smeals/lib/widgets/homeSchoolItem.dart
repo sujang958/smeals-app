@@ -20,8 +20,7 @@ class _HomeSchoolItemState extends State<HomeSchoolItemWidget> {
       ),
       child: GestureDetector(
           onTap: () {
-            Navigator.push(context,
-                CupertinoPageRoute(builder: (context) => DetailScreen()));
+            Navigator.pushNamed(context, '/detail');
           },
           behavior: HitTestBehavior.translucent,
           child: Container(
