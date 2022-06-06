@@ -7,11 +7,11 @@ class RootWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DefaultTextStyle(style: const TextStyle(
-      fontFamily: "Pretendard",
-      color: Colors.white,
-      fontWeight: FontWeight.w500
-    ), child: child);
+    return DefaultTextStyle(
+        style: const TextStyle(
+            fontFamily: "Pretendard",
+            color: Colors.white,
+            fontWeight: FontWeight.w500),
+        child: child);
   }
-
 }
