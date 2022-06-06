@@ -64,6 +64,17 @@ class _SearchScreenState extends State<SearchScreen> {
         .isNotEmpty) return;
     previous.add(jsonEncode(school.toJson()));
     await prefs.setStringList(prefsKey, previous);
+    showDialog(
+        context: context,
+        builder: (context) => CupertinoAlertDialog(
+              title: Text("추가 완!료"),
+              actions: [
+                CupertinoDialogAction(
+                  child: Text("확?인"),
+                  onPressed: () => Navigator.pop(context),
+                )
+              ],
+            ));
   }
 
   @override

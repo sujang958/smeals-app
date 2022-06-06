@@ -1,7 +1,12 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:smeals/main.dart';
+import 'package:smeals/models/school.dart';
 import 'package:smeals/widgets/homeSchoolItem.dart';
 import 'package:smeals/widgets/root.dart';
 
@@ -13,6 +18,35 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  final Map<String, School> schools = {};
+  bool isLoading = true;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadSchoolsFromPrefs();
+  }
+
+  void _loadSchoolsFromPrefs() async {
+    setState(() {
+      isLoading = true;
+    });
+    final prefs = await SharedPreferences.getInstance();
+    final encodedList = prefs.getStringList(prefsKey) ?? [];
+    if (encodedList.isNotEmpty) {
+      setState(() {
+        for (final school in encodedList
+            .map((e) => jsonDecode(e))
+            .map((e) => School.fromJson(e))) {
+          schools['${school.scCode}:${school.code}'] = school;
+        }
+      });
+    }
+    setState(() {
+      isLoading = false;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -67,7 +101,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                 size: 26.0,
                               ),
                               onPressed: () =>
-                                  Navigator.pushNamed(context, '/search'),
+                                  Navigator.pushNamed(context, '/search')
+                                      .then((_) => _loadSchoolsFromPrefs()),
                             ),
                           ),
                         ],
@@ -78,14 +113,19 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: DefaultTextStyle(
                     style: const TextStyle(
                         color: Colors.black, fontFamily: "Pretendard"),
-                    child: PageView(
-                      physics: BouncingScrollPhysics(),
-                      children: [
-                        HomeSchoolItemWidget(),
-                        HomeSchoolItemWidget(),
-                        HomeSchoolItemWidget(),
-                      ],
-                    ))),
+                    child: isLoading
+                        ? const Center(
+                            child: CupertinoActivityIndicator(
+                              radius: 13.4,
+                            ),
+                          )
+                        : PageView(
+                            physics: BouncingScrollPhysics(),
+                            children: [
+                              for (final school in schools.entries)
+                                HomeSchoolItemWidget(school: school.value)
+                            ],
+                          ))),
             Padding(padding: EdgeInsets.symmetric(vertical: 68.0)),
           ],
         )),
