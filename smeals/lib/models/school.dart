@@ -2,7 +2,8 @@ import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 
-const fetchSchoolsUri = "https://asia-northeast3-smeals-school.cloudfunctions.net/meals/schools?name=";
+const fetchSchoolsUri =
+    "https://asia-northeast3-smeals-school.cloudfunctions.net/meals/schools?name=";
 
 class School {
   final String code;
@@ -22,7 +23,8 @@ class School {
 }
 
 Future<List<School>> fetchSchools(String? name) async {
-  final response = await http.get(Uri.parse('${fetchSchoolsUri}${name ?? '교'}'));
+  final response =
+      await http.get(Uri.parse('$fetchSchoolsUri${name ?? '교'}'));
 
   if (response.statusCode >= 400) {
     throw Exception("Can't fetch schools!");

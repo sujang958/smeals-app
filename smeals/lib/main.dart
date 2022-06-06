@@ -18,6 +18,7 @@ class App extends StatelessWidget {
       title: 'Smeals - 우리학교 급식 보기',
       themeMode: ThemeMode.dark,
       theme: ThemeData(
+        brightness: Brightness.dark,
         backgroundColor: Colors.black,
         scaffoldBackgroundColor: Colors.black,
         splashColor: Colors.transparent,
