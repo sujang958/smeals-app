@@ -1,4 +1,6 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:smeals/screens/home.dart';
 
 void main() {
@@ -19,6 +21,10 @@ class App extends StatelessWidget {
         splashColor: Colors.transparent,
         highlightColor: Colors.transparent,
       ),
+      localizationsDelegates: [
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      supportedLocales: const [Locale('ko')],
       initialRoute: '/',
       routes: {
         '/': (context) => HomeScreen(),
