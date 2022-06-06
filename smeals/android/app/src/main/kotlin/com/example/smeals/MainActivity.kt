@@ -1,4 +1,4 @@
-package com.example.smeals
+package co.smeals.app
 
 import io.flutter.embedding.android.FlutterActivity
 
