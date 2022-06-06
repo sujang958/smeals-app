@@ -66,9 +66,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                 color: Colors.white,
                                 size: 26.0,
                               ),
-                              onPressed: () {
-                                Navigator.pushNamed(context, '/search');
-                              },
+                              onPressed: () =>
+                                  Navigator.pushNamed(context, '/search'),
                             ),
                           ),
                         ],
