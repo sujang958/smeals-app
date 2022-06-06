@@ -2,7 +2,16 @@ import 'dart:ui';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:smeals/models/school.dart';
 import 'package:smeals/widgets/root.dart';
+
+import '../models/meal.dart';
+
+class DetailScreenArguments {
+  final School school;
+
+  const DetailScreenArguments({required this.school});
+}
 
 class DetailScreen extends StatefulWidget {
   const DetailScreen({Key? key}) : super(key: key);
@@ -13,31 +22,61 @@ class DetailScreen extends StatefulWidget {
 
 class _DetailScreenState extends State<DetailScreen> {
   final ValueNotifier<DateTime> dateNotifier = ValueNotifier(DateTime.now());
+  
+  late Future<List<Meal>> meals;
+  late School school;
+
+  DateTime date = DateTime.now();
+
+  @override
+  void initState() {
+    super.initState();
+    dateNotifier.addListener(() {
+      setState(() {
+        date = dateNotifier.value;
+        _fetchMeals();
+      });
+    });
+  }
+
+  void _fetchMeals() {
+     meals = fetchMeals(
+          code: school.code,
+          scCode: school.scCode,
+          date: date);
+  }
 
   @override
   Widget build(BuildContext context) {
+    final args =
+        ModalRoute.of(context)!.settings.arguments as DetailScreenArguments;
+    setState(() {
+      school = args.school;
+      _fetchMeals();
+    });
+
     return CupertinoPageScaffold(
-      navigationBar: CupertinoNavigationBar(
+      navigationBar: const CupertinoNavigationBar(
         backgroundColor: Colors.black,
       ),
       child: SafeArea(
         maintainBottomViewPadding: true,
         child: RootWidget(
           child: Container(
-            padding: EdgeInsets.symmetric(horizontal: 20.0),
+            padding: const EdgeInsets.symmetric(horizontal: 20.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Padding(
-                  padding: EdgeInsets.only(top: 42.0, bottom: 21.0),
+                  padding: const EdgeInsets.only(top: 42.0, bottom: 21.0),
                   child: Text(
-                    "대구동중학교\n급식 정보",
-                    style:
-                        TextStyle(fontWeight: FontWeight.bold, fontSize: 34.0),
+                    "${args.school.name}\n급식 정보",
+                    style: const TextStyle(
+                        fontWeight: FontWeight.bold, fontSize: 34.0),
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsets.symmetric(vertical: 2.0),
+                  padding: const EdgeInsets.symmetric(vertical: 2.0),
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -64,32 +103,60 @@ class _DetailScreenState extends State<DetailScreen> {
                     ],
                   ),
                 ),
-                Padding(padding: EdgeInsets.symmetric(vertical: 8.0)),
+                const Padding(padding: EdgeInsets.symmetric(vertical: 8.0)),
                 Expanded(
-                  child: ListView(
-                    physics: const BouncingScrollPhysics(),
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(top: 10.0, bottom: 20.0),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              "중식 - 521.6 kcal",
-                              style: const TextStyle(fontSize: 21.0),
+                    child: FutureBuilder(
+                        future: meals,
+                        builder: (context, snapshot) {
+                          if (snapshot.hasData) {
+                            List<Meal> meals = snapshot.data as List<Meal>;
+
+                            return ListView(
+                              physics: const BouncingScrollPhysics(),
+                              children: [
+                                for (final meal in meals)
+                                  Padding(
+                                    padding: const EdgeInsets.only(
+                                        top: 10.0, bottom: 20.0),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          "${meal.type} - ${meal.calories}",
+                                          style:
+                                              const TextStyle(fontSize: 21.0),
+                                        ),
+                                        const Padding(
+                                            padding: EdgeInsets.symmetric(
+                                                vertical: 7.0)),
+                                        Text(
+                                          meal.menu.join(", "),
+                                          style:
+                                              const TextStyle(fontSize: 18.0),
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                              ],
+                            );
+                          }
+
+                          if (snapshot.hasError) {
+                            return const Center(
+                              child: Text(
+                                "급?식 없!음",
+                                style: TextStyle(fontSize: 26.0),
+                              ),
+                            );
+                          }
+
+                          return const Center(
+                            child: CupertinoActivityIndicator(
+                              radius: 14.0,
                             ),
-                            const Padding(
-                                padding: EdgeInsets.symmetric(vertical: 7.0)),
-                            Text(
-                              '닭가슴살, 닭가슴살, 닭가슴살, 닭가슴살, 닭가슴살, 닭가슴살, 닭가슴살',
-                              style: const TextStyle(fontSize: 18.0),
-                            )
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
+                          );
+                        })),
               ],
             ),
           ),

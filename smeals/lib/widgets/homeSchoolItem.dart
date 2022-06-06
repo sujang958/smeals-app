@@ -36,7 +36,8 @@ class _HomeSchoolItemState extends State<HomeSchoolItemWidget> {
       ),
       child: GestureDetector(
           onTap: () {
-            Navigator.pushNamed(context, '/detail');
+            Navigator.pushNamed(context, '/detail',
+                arguments: DetailScreenArguments(school: widget.school));
           },
           behavior: HitTestBehavior.translucent,
           child: Container(
@@ -108,7 +109,7 @@ class _HomeSchoolItemState extends State<HomeSchoolItemWidget> {
                                                   child: Text(
                                                     meal.menu.join(", "),
                                                     softWrap: true,
-                                                    style: TextStyle(
+                                                    style: const TextStyle(
                                                       fontSize: 18.0,
                                                     ),
                                                   ),
