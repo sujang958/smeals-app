@@ -63,8 +63,7 @@ class _SearchScreenState extends State<SearchScreen> {
             decoded['scCode'] == school.scCode)(jsonDecode(element)))
         .isNotEmpty) return;
     previous.add(jsonEncode(school.toJson()));
-    print(previous);
-    prefs.setStringList(prefsKey, previous);
+    await prefs.setStringList(prefsKey, previous);
   }
 
   @override
