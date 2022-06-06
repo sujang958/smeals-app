@@ -12,6 +12,8 @@ class DetailScreen extends StatefulWidget {
 }
 
 class _DetailScreenState extends State<DetailScreen> {
+  final ValueNotifier<DateTime> dateNotifier = ValueNotifier(DateTime.now());
+
   @override
   Widget build(BuildContext context) {
     return CupertinoPageScaffold(
@@ -40,7 +42,10 @@ class _DetailScreenState extends State<DetailScreen> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      const SizedBox.shrink(),
+                      Text(
+                        dateNotifier.value.toString().split(" ")[0],
+                        style: const TextStyle(fontSize: 22.0),
+                      ),
                       Material(
                           color: Colors.transparent,
                           child: IconButton(
@@ -48,15 +53,38 @@ class _DetailScreenState extends State<DetailScreen> {
                                 showCupertinoModalPopup(
                                     context: context,
                                     builder: (context) => DatePickerWidget(
-                                          dateNotifier:
-                                              ValueNotifier(DateTime.now()),
+                                          dateNotifier: dateNotifier,
                                         ));
                               },
-                              icon: Icon(
+                              icon: const Icon(
                                 CupertinoIcons.time,
                                 color: Colors.white,
                                 size: 30.0,
                               ))),
+                    ],
+                  ),
+                ),
+                Padding(padding: EdgeInsets.symmetric(vertical: 8.0)),
+                Expanded(
+                  child: ListView(
+                    physics: const BouncingScrollPhysics(),
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(top: 10.0, bottom: 20.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text("중식 - 521.6 kcal", style: const TextStyle(
+                              fontSize: 21.0
+                            ),),
+                            const Padding(padding: EdgeInsets.symmetric(vertical: 7.0)),
+                            Text('닭가슴살, 닭가슴살, 닭가슴살, 닭가슴살, 닭가슴살, 닭가슴살, 닭가슴살', style: const TextStyle(
+                              fontSize: 18.0
+                            ),)
+                            ],
+                        ),
+                      ),
+                      
                     ],
                   ),
                 ),
