@@ -45,17 +45,30 @@ class _HomeScreenState extends State<HomeScreen> {
                           Material(
                             color: Colors.transparent,
                             child: IconButton(
-                              icon: Icon(CupertinoIcons.info, color: Colors.white, size: 26.0,),
+                              icon: Icon(
+                                CupertinoIcons.info,
+                                color: Colors.white,
+                                size: 26.0,
+                              ),
                               onPressed: () {
+                                // todo: use license registry to make standalone(/license) page
                                 showLicensePage(context: context);
                               },
                             ),
                           ),
+                          const Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 4.0)),
                           Material(
                             color: Colors.transparent,
                             child: IconButton(
-                              icon: Icon(CupertinoIcons.add, color: Colors.white, size: 26.0,),
-                              onPressed: () {},
+                              icon: Icon(
+                                CupertinoIcons.add,
+                                color: Colors.white,
+                                size: 26.0,
+                              ),
+                              onPressed: () {
+                                Navigator.pushNamed(context, '/search');
+                              },
                             ),
                           ),
                         ],

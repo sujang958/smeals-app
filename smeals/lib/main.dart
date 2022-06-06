@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:smeals/screens/detail.dart';
 import 'package:smeals/screens/home.dart';
+import 'package:smeals/screens/search.dart';
 
 void main() {
   runApp(const App());
@@ -22,7 +23,8 @@ class App extends StatelessWidget {
         splashColor: Colors.transparent,
         highlightColor: Colors.transparent,
       ),
-      localizationsDelegates: [
+      localizationsDelegates: const [
+        GlobalMaterialLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
       ],
       supportedLocales: const [Locale('ko')],
@@ -30,6 +32,7 @@ class App extends StatelessWidget {
       routes: {
         '/': (context) => HomeScreen(),
         '/detail': (context) => DetailScreen(),
+        '/search': (context) => SearchScreen(),
       },
     );
   }
