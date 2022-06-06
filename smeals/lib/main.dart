@@ -29,7 +29,7 @@ class App extends StatelessWidget {
       initialRoute: '/',
       routes: {
         '/': (context) => HomeScreen(),
-        '/detail':(context) => DetailScreen(),
+        '/detail': (context) => DetailScreen(),
       },
     );
   }

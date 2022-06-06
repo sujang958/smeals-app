@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:smeals/widgets/homeSchoolItem.dart';
 import 'package:smeals/widgets/root.dart';
@@ -20,27 +21,53 @@ class _HomeScreenState extends State<HomeScreen> {
             child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Padding(
-              padding: EdgeInsets.only(
-                top: 52.0,
-                bottom: 32.0,
-                left: 20.0,
-                right: 20.0,
-              ),
-              child: Text(
-                "급식",
-                style: TextStyle(
-                  fontSize: 46.0,
-                  fontWeight: FontWeight.bold,
+            Padding(
+                padding: EdgeInsets.only(
+                  top: 52.0,
+                  bottom: 32.0,
+                  left: 20.0,
+                  right: 20.0,
                 ),
-              ),
-            ),
+                child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const Text(
+                        "급식",
+                        style: TextStyle(
+                          fontSize: 46.0,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Material(
+                            color: Colors.transparent,
+                            child: IconButton(
+                              icon: Icon(CupertinoIcons.info, color: Colors.white, size: 26.0,),
+                              onPressed: () {
+                                showLicensePage(context: context);
+                              },
+                            ),
+                          ),
+                          Material(
+                            color: Colors.transparent,
+                            child: IconButton(
+                              icon: Icon(CupertinoIcons.add, color: Colors.white, size: 26.0,),
+                              onPressed: () {},
+                            ),
+                          ),
+                        ],
+                      ),
+                    ])),
             const Padding(padding: EdgeInsets.symmetric(vertical: 16.0)),
             Expanded(
                 child: DefaultTextStyle(
                     style: const TextStyle(
                         color: Colors.black, fontFamily: "Pretendard"),
                     child: PageView(
+                      physics: BouncingScrollPhysics(),
                       children: [
                         HomeSchoolItemWidget(),
                         HomeSchoolItemWidget(),

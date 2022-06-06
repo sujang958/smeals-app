@@ -74,17 +74,19 @@ class _DetailScreenState extends State<DetailScreen> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text("중식 - 521.6 kcal", style: const TextStyle(
-                              fontSize: 21.0
-                            ),),
-                            const Padding(padding: EdgeInsets.symmetric(vertical: 7.0)),
-                            Text('닭가슴살, 닭가슴살, 닭가슴살, 닭가슴살, 닭가슴살, 닭가슴살, 닭가슴살', style: const TextStyle(
-                              fontSize: 18.0
-                            ),)
-                            ],
+                            Text(
+                              "중식 - 521.6 kcal",
+                              style: const TextStyle(fontSize: 21.0),
+                            ),
+                            const Padding(
+                                padding: EdgeInsets.symmetric(vertical: 7.0)),
+                            Text(
+                              '닭가슴살, 닭가슴살, 닭가슴살, 닭가슴살, 닭가슴살, 닭가슴살, 닭가슴살',
+                              style: const TextStyle(fontSize: 18.0),
+                            )
+                          ],
                         ),
                       ),
-                      
                     ],
                   ),
                 ),
