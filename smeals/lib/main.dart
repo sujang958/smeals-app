@@ -5,6 +5,8 @@ import 'package:smeals/screens/detail.dart';
 import 'package:smeals/screens/home.dart';
 import 'package:smeals/screens/search.dart';
 
+const prefsKey = "__smeals__schools_list__";
+
 void main() {
   runApp(const App());
 }

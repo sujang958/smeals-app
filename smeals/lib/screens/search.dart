@@ -1,7 +1,11 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:smeals/main.dart';
 import 'package:smeals/models/school.dart';
 import 'package:smeals/widgets/root.dart';
 
@@ -14,7 +18,7 @@ class SearchScreen extends StatefulWidget {
 
 class _SearchScreenState extends State<SearchScreen> {
   bool isLoading = false;
-  
+
   final Map<String, School> schools = {};
   final inputController = TextEditingController();
 
@@ -48,6 +52,19 @@ class _SearchScreenState extends State<SearchScreen> {
         isLoading = false;
       });
     }
+  }
+
+  void _addSchoolToPrefs(School school) async {
+    final prefs = await SharedPreferences.getInstance();
+    final List<String> previous = prefs.getStringList(prefsKey) ?? [];
+    if (previous
+        .where((element) => ((decoded) =>
+            decoded['code'] == school.code &&
+            decoded['scCode'] == school.scCode)(jsonDecode(element)))
+        .isNotEmpty) return;
+    previous.add(jsonEncode(school.toJson()));
+    print(previous);
+    prefs.setStringList(prefsKey, previous);
   }
 
   @override
@@ -108,6 +125,8 @@ class _SearchScreenState extends State<SearchScreen> {
                               .map((school) => Material(
                                     color: Colors.transparent,
                                     child: ListTile(
+                                      onTap: () =>
+                                          _addSchoolToPrefs(school.value),
                                       contentPadding:
                                           const EdgeInsets.symmetric(
                                         vertical: 5.0,
