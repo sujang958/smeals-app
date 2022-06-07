@@ -17,6 +17,7 @@ class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Smeals - 우리학교 급식 보기',
       themeMode: ThemeMode.dark,
       theme: ThemeData(
