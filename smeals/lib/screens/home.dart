@@ -19,12 +19,40 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   final Map<String, School> schools = {};
+  final deletingNotifier = ValueNotifier<String?>(null);
+
   bool isLoading = true;
 
   @override
   void initState() {
     super.initState();
+    deletingNotifier.addListener(() {
+      if (deletingNotifier.value == null) return;
+      _deleteSchool(deletingNotifier.value as String);
+    },);
     _loadSchoolsFromPrefs();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    deletingNotifier.dispose();
+  }
+
+  void _deleteSchool(String id) async {
+    setState(() {
+      isLoading = true;
+      schools.remove(id);
+      isLoading = false;
+    });
+    final prefs = await SharedPreferences.getInstance();
+    final encodedList = prefs.getStringList(prefsKey) ?? [];
+    if (encodedList.isNotEmpty) {
+      encodedList.removeWhere((element) => ((Map<String, dynamic> decoded) =>
+        decoded['scCode'] == id.split(":")[0] && decoded['code'] == id.split(":")[1]
+      )(jsonDecode(element)));
+      prefs.setStringList(prefsKey, encodedList);
+    }
   }
 
   void _loadSchoolsFromPrefs() async {
@@ -123,7 +151,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             physics: BouncingScrollPhysics(),
                             children: [
                               for (final school in schools.entries)
-                                HomeSchoolItemWidget(school: school.value)
+                                HomeSchoolItemWidget(school: school.value, deletingNotifier: deletingNotifier)
                             ],
                           ))),
             Padding(padding: EdgeInsets.symmetric(vertical: 68.0)),

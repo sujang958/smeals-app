@@ -6,10 +6,11 @@ import 'package:smeals/screens/detail.dart';
 import 'package:smeals/widgets/root.dart';
 
 class HomeSchoolItemWidget extends StatefulWidget {
-  const HomeSchoolItemWidget({Key? key, required this.school})
+  const HomeSchoolItemWidget({Key? key, required this.school, required this.deletingNotifier})
       : super(key: key);
 
   final School school;
+  final ValueNotifier<String?> deletingNotifier;
 
   @override
   State<StatefulWidget> createState() => _HomeSchoolItemState();
@@ -38,6 +39,28 @@ class _HomeSchoolItemState extends State<HomeSchoolItemWidget> {
           onTap: () {
             Navigator.pushNamed(context, '/detail',
                 arguments: DetailScreenArguments(school: widget.school));
+          },
+          onLongPress: () {
+            showCupertinoDialog(
+                context: context,
+                builder: (context) => CupertinoAlertDialog(
+                      title: const Text("삭?제"),
+                      content: const Text("삭?제 하시겠습니까?"),
+                      actions: [
+                        CupertinoDialogAction(
+                          child: const Text("취?소"),
+                          onPressed: () => Navigator.pop(context),
+                        ),
+                        CupertinoDialogAction(
+                          isDestructiveAction: true,
+                          onPressed: () {
+                            widget.deletingNotifier.value = '${widget.school.scCode}:${widget.school.code}';
+                            Navigator.pop(context);
+                          },
+                          child: const Text("삭!제"),
+                        ),
+                      ],
+                    ));
           },
           behavior: HitTestBehavior.translucent,
           child: Container(
