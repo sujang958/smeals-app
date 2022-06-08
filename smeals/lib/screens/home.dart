@@ -26,10 +26,12 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
-    deletingNotifier.addListener(() {
-      if (deletingNotifier.value == null) return;
-      _deleteSchool(deletingNotifier.value as String);
-    },);
+    deletingNotifier.addListener(
+      () {
+        if (deletingNotifier.value == null) return;
+        _deleteSchool(deletingNotifier.value as String);
+      },
+    );
     _loadSchoolsFromPrefs();
   }
 
@@ -49,8 +51,8 @@ class _HomeScreenState extends State<HomeScreen> {
     final encodedList = prefs.getStringList(prefsKey) ?? [];
     if (encodedList.isNotEmpty) {
       encodedList.removeWhere((element) => ((Map<String, dynamic> decoded) =>
-        decoded['scCode'] == id.split(":")[0] && decoded['code'] == id.split(":")[1]
-      )(jsonDecode(element)));
+          decoded['scCode'] == id.split(":")[0] &&
+          decoded['code'] == id.split(":")[1])(jsonDecode(element)));
       prefs.setStringList(prefsKey, encodedList);
     }
   }
@@ -147,13 +149,22 @@ class _HomeScreenState extends State<HomeScreen> {
                               radius: 13.4,
                             ),
                           )
-                        : PageView(
-                            physics: BouncingScrollPhysics(),
-                            children: [
-                              for (final school in schools.entries)
-                                HomeSchoolItemWidget(school: school.value, deletingNotifier: deletingNotifier)
-                            ],
-                          ))),
+                        : (schools.isEmpty
+                            ? const Center(
+                                child: Text(
+                                  "+ 버튼을 눌러 학교를 추가 해 보세요",
+                                  style: TextStyle(color: Colors.white, fontSize: 22.0),
+                                ),
+                              )
+                            : PageView(
+                                physics: BouncingScrollPhysics(),
+                                children: [
+                                  for (final school in schools.entries)
+                                    HomeSchoolItemWidget(
+                                        school: school.value,
+                                        deletingNotifier: deletingNotifier)
+                                ],
+                              )))),
             Padding(padding: EdgeInsets.symmetric(vertical: 68.0)),
           ],
         )),

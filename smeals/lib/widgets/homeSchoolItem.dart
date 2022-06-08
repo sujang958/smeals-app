@@ -6,7 +6,8 @@ import 'package:smeals/screens/detail.dart';
 import 'package:smeals/widgets/root.dart';
 
 class HomeSchoolItemWidget extends StatefulWidget {
-  const HomeSchoolItemWidget({Key? key, required this.school, required this.deletingNotifier})
+  const HomeSchoolItemWidget(
+      {Key? key, required this.school, required this.deletingNotifier})
       : super(key: key);
 
   final School school;
@@ -54,7 +55,8 @@ class _HomeSchoolItemState extends State<HomeSchoolItemWidget> {
                         CupertinoDialogAction(
                           isDestructiveAction: true,
                           onPressed: () {
-                            widget.deletingNotifier.value = '${widget.school.scCode}:${widget.school.code}';
+                            widget.deletingNotifier.value =
+                                '${widget.school.scCode}:${widget.school.code}';
                             Navigator.pop(context);
                           },
                           child: const Text("삭!제"),
