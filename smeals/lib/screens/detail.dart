@@ -1,7 +1,6 @@
-import 'dart:ui';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:smeals/models/school.dart';
 import 'package:smeals/widgets/root.dart';
 
@@ -22,8 +21,9 @@ class DetailScreen extends StatefulWidget {
 
 class _DetailScreenState extends State<DetailScreen> {
   final ValueNotifier<DateTime> dateNotifier = ValueNotifier(DateTime.now());
-  
-  late Future<List<Meal>> meals;
+
+  Future<List<Meal>>? meals;
+
   late School school;
 
   DateTime date = DateTime.now();
@@ -34,16 +34,16 @@ class _DetailScreenState extends State<DetailScreen> {
     dateNotifier.addListener(() {
       setState(() {
         date = dateNotifier.value;
+        meals = null;
         _fetchMeals();
       });
     });
   }
 
   void _fetchMeals() {
-     meals = fetchMeals(
-          code: school.code,
-          scCode: school.scCode,
-          date: date);
+    setState(() {
+      meals = fetchMeals(code: school.code, scCode: school.scCode, date: date);
+    });
   }
 
   @override
@@ -89,11 +89,19 @@ class _DetailScreenState extends State<DetailScreen> {
                           color: Colors.transparent,
                           child: IconButton(
                               onPressed: () {
-                                showCupertinoModalPopup(
-                                    context: context,
-                                    builder: (context) => DatePickerWidget(
-                                          dateNotifier: dateNotifier,
-                                        ));
+                                DatePicker.showDatePicker(context,
+                                    currentTime: dateNotifier.value,
+                                    locale: LocaleType.ko,
+                                    theme: const DatePickerTheme(
+                                        backgroundColor:
+                                            CupertinoColors.darkBackgroundGray,
+                                        cancelStyle: TextStyle(
+                                          color: CupertinoColors.destructiveRed,
+                                        ),
+                                        itemStyle:
+                                            TextStyle(color: Colors.white)),
+                                    onConfirm: (date) =>
+                                        dateNotifier.value = date);
                               },
                               icon: const Icon(
                                 CupertinoIcons.time,
@@ -162,82 +170,6 @@ class _DetailScreenState extends State<DetailScreen> {
           ),
         ),
       ),
-    );
-  }
-}
-
-class DatePickerWidget extends StatefulWidget {
-  const DatePickerWidget({Key? key, required this.dateNotifier})
-      : super(key: key);
-
-  final ValueNotifier<DateTime> dateNotifier;
-
-  @override
-  State<StatefulWidget> createState() => _DatePickerState();
-}
-
-class _DatePickerState extends State<DatePickerWidget> {
-  late DateTime date;
-
-  @override
-  void initState() {
-    super.initState();
-    date = widget.dateNotifier.value;
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return BackdropFilter(
-      filter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
-      child: Container(
-          color: Colors.white.withAlpha(200),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Expanded(
-                child: CupertinoDatePicker(
-                    onDateTimeChanged: (date) {
-                      setState(() {
-                        this.date = date;
-                      });
-                    },
-                    mode: CupertinoDatePickerMode.date),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(
-                  bottom: 52.0,
-                  left: 20.0,
-                  right: 20.0,
-                ),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Expanded(
-                      child: CupertinoButton(
-                          child: Text('취소'),
-                          onPressed: () {
-                            Navigator.pop(context);
-                          },
-                          color: CupertinoColors.destructiveRed),
-                    ),
-                    const Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 4.0)),
-                    Expanded(
-                      child: CupertinoButton(
-                        child: Text('확인'),
-                        onPressed: () {
-                          widget.dateNotifier.value = date;
-                          Navigator.pop(context);
-                        },
-                        color: CupertinoColors.activeBlue,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          )),
     );
   }
 }
