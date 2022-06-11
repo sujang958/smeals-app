@@ -153,7 +153,7 @@ class _DetailScreenState extends State<DetailScreen> {
                           if (snapshot.hasError) {
                             return const Center(
                               child: Text(
-                                "급?식 없!음",
+                                "급식이 없어요!",
                                 style: TextStyle(fontSize: 26.0),
                               ),
                             );

@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:smeals/models/meal.dart';
 import 'package:smeals/models/school.dart';
 import 'package:smeals/screens/detail.dart';
-import 'package:smeals/widgets/root.dart';
 
 class HomeSchoolItemWidget extends StatefulWidget {
   const HomeSchoolItemWidget(
@@ -45,11 +44,11 @@ class _HomeSchoolItemState extends State<HomeSchoolItemWidget> {
             showCupertinoDialog(
                 context: context,
                 builder: (context) => CupertinoAlertDialog(
-                      title: const Text("삭?제"),
-                      content: const Text("삭?제 하시겠습니까?"),
+                      title: const Text("삭제"),
+                      content: const Text("정말로 삭제하실 건가요?"),
                       actions: [
                         CupertinoDialogAction(
-                          child: const Text("취?소"),
+                          child: const Text("취소"),
                           onPressed: () => Navigator.pop(context),
                         ),
                         CupertinoDialogAction(
@@ -59,7 +58,7 @@ class _HomeSchoolItemState extends State<HomeSchoolItemWidget> {
                                 '${widget.school.scCode}:${widget.school.code}';
                             Navigator.pop(context);
                           },
-                          child: const Text("삭!제"),
+                          child: const Text("삭제"),
                         ),
                       ],
                     ));
@@ -74,7 +73,6 @@ class _HomeSchoolItemState extends State<HomeSchoolItemWidget> {
                 builder: (context, snapshot) {
                   if (snapshot.hasData) {
                     List<Meal> meals = snapshot.data as List<Meal>;
-                    print(meals[0].date);
                     return Padding(
                       padding: const EdgeInsets.symmetric(
                         vertical: 22.0,
@@ -155,22 +153,34 @@ class _HomeSchoolItemState extends State<HomeSchoolItemWidget> {
                   }
 
                   if (snapshot.hasError) {
-                    return Center(
-                      child: Text(
-                        "${widget.school.name}\n급식 없!음",
-                        textAlign: TextAlign.center,
-                        style: const TextStyle(
-                          fontSize: 28.0,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    );
+                    return Padding(
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 22.0, horizontal: 18.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                          Text(
+                            widget.school.name,
+                            style: const TextStyle(
+                              fontSize: 32.0,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          const Expanded(child: Center(
+                            child: Text(
+                              '오늘 급식이 없어요!',
+                              style: TextStyle(
+                                fontSize: 23.0
+                              ),
+                            ),
+                          ),)
+                        ]));
                   }
 
                   return const Center(
                     child: CupertinoActivityIndicator(
                       color: Colors.black,
-                      radius: 14.0,
+                      radius: 14.4,
                     ),
                   );
                 },

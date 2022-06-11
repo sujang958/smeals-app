@@ -1,5 +1,3 @@
-// ignore_for_file: prefer_const_constructors
-
 import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
@@ -86,7 +84,7 @@ class _HomeScreenState extends State<HomeScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Padding(
-                padding: EdgeInsets.only(
+                padding: const EdgeInsets.only(
                   top: 52.0,
                   bottom: 32.0,
                   left: 20.0,
@@ -109,7 +107,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           Material(
                             color: Colors.transparent,
                             child: IconButton(
-                              icon: Icon(
+                              icon: const Icon(
                                 CupertinoIcons.info,
                                 color: Colors.white,
                                 size: 26.0,
@@ -125,7 +123,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           Material(
                             color: Colors.transparent,
                             child: IconButton(
-                              icon: Icon(
+                              icon: const Icon(
                                 CupertinoIcons.add,
                                 color: Colors.white,
                                 size: 26.0,
@@ -153,7 +151,8 @@ class _HomeScreenState extends State<HomeScreen> {
                             ? const Center(
                                 child: Text(
                                   "+ 버튼을 눌러 학교를 추가 해 보세요",
-                                  style: TextStyle(color: Colors.white, fontSize: 22.0),
+                                  style: TextStyle(
+                                      color: Colors.white, fontSize: 22.0),
                                 ),
                               )
                             : PageView(
@@ -165,7 +164,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                         deletingNotifier: deletingNotifier)
                                 ],
                               )))),
-            Padding(padding: EdgeInsets.symmetric(vertical: 68.0)),
+            const Padding(padding: EdgeInsets.symmetric(vertical: 68.0)),
           ],
         )),
       ),

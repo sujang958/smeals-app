@@ -1,5 +1,3 @@
-// ignore_for_file: prefer_const_constructors
-
 import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
@@ -39,10 +37,10 @@ class _SearchScreenState extends State<SearchScreen> {
       showCupertinoDialog(
           context: context,
           builder: (context) => CupertinoAlertDialog(
-                title: const Text("학교를 찾을 수 없습니다!"),
+                title: const Text("학교를 찾을 수 없어요!"),
                 actions: [
                   CupertinoDialogAction(
-                    child: const Text("저런!"),
+                    child: const Text("확인"),
                     onPressed: () => Navigator.pop(context),
                   ),
                 ],
@@ -67,10 +65,10 @@ class _SearchScreenState extends State<SearchScreen> {
     showDialog(
         context: context,
         builder: (context) => CupertinoAlertDialog(
-              title: Text("추가 완!료"),
+              title: const Text("학교를 추가했어요!"),
               actions: [
                 CupertinoDialogAction(
-                  child: Text("확?인"),
+                  child: const Text("확인"),
                   onPressed: () => Navigator.pop(context),
                 )
               ],
@@ -80,7 +78,7 @@ class _SearchScreenState extends State<SearchScreen> {
   @override
   Widget build(BuildContext context) {
     return CupertinoPageScaffold(
-      navigationBar: CupertinoNavigationBar(
+      navigationBar: const CupertinoNavigationBar(
         backgroundColor: Colors.black,
       ),
       child: SafeArea(
@@ -111,7 +109,7 @@ class _SearchScreenState extends State<SearchScreen> {
                   suffix: Material(
                     color: Colors.transparent,
                     child: IconButton(
-                      icon: Icon(
+                      icon: const Icon(
                         CupertinoIcons.search,
                         color: Colors.white,
                         size: 24.0,
@@ -124,13 +122,13 @@ class _SearchScreenState extends State<SearchScreen> {
                 const Padding(padding: EdgeInsets.symmetric(vertical: 16.0)),
                 Expanded(
                   child: isLoading
-                      ? Center(
+                      ? const Center(
                           child: CupertinoActivityIndicator(
                             radius: 14.0,
                           ),
                         )
                       : ListView(
-                          physics: BouncingScrollPhysics(),
+                          physics: const BouncingScrollPhysics(),
                           children: schools.entries
                               .map((school) => Material(
                                     color: Colors.transparent,
