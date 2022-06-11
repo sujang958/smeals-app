@@ -19,6 +19,8 @@ class HomeSchoolItemWidget extends StatefulWidget {
 class _HomeSchoolItemState extends State<HomeSchoolItemWidget> {
   late Future<List<Meal>> meals;
 
+  bool isTapping = false;
+
   @override
   void initState() {
     super.initState();
@@ -63,11 +65,21 @@ class _HomeSchoolItemState extends State<HomeSchoolItemWidget> {
                       ],
                     ));
           },
+          onTapDown: (_) => setState(() {
+                isTapping = true;
+              }),
+          onTapUp: (_) => setState(() {
+                isTapping = false;
+              }),
+          onTapCancel: () => setState(() {
+                isTapping = false;
+              }),
           behavior: HitTestBehavior.translucent,
-          child: Container(
+          child: AnimatedContainer(
+              duration: const Duration(milliseconds: 100),
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(14.0),
-                  color: Colors.white),
+                  color: isTapping ? Colors.white38 : Colors.white),
               child: FutureBuilder(
                 future: meals,
                 builder: (context, snapshot) {
@@ -157,24 +169,24 @@ class _HomeSchoolItemState extends State<HomeSchoolItemWidget> {
                         padding: const EdgeInsets.symmetric(
                             vertical: 22.0, horizontal: 18.0),
                         child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                          Text(
-                            widget.school.name,
-                            style: const TextStyle(
-                              fontSize: 32.0,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          const Expanded(child: Center(
-                            child: Text(
-                              '오늘 급식이 없어요!',
-                              style: TextStyle(
-                                fontSize: 23.0
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                widget.school.name,
+                                style: const TextStyle(
+                                  fontSize: 32.0,
+                                  fontWeight: FontWeight.bold,
+                                ),
                               ),
-                            ),
-                          ),)
-                        ]));
+                              const Expanded(
+                                child: Center(
+                                  child: Text(
+                                    '오늘 급식이 없어요!',
+                                    style: TextStyle(fontSize: 23.0),
+                                  ),
+                                ),
+                              )
+                            ]));
                   }
 
                   return const Center(
