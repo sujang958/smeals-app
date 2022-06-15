@@ -1,8 +1,12 @@
-import '../styles/globals.css'
-import type { AppProps } from 'next/app'
+import "../styles/globals.css"
+import type { AppProps } from "next/app"
 
 function MyApp({ Component, pageProps }: AppProps) {
-  return <Component {...pageProps} />
+  return (
+    <div className="w-full min-h-screen font-pretendard">
+      <Component {...pageProps} />
+    </div>
+  )
 }
 
 export default MyApp
