@@ -9,8 +9,13 @@ const Home: NextPage = () => {
           쉽고, 간편히 확인하세요. <br />
           깔끔한 디자인은 당신을 기분좋게 만듭니다.
         </p>
-        <div className="flex flex-row items-center justify-center py-2 space-x-4">
+        <div className="-mt-1.5 flex flex-row items-center justify-center space-x-4">
           <svg
+            onClick={() =>
+              open(
+                "https://apps.apple.com/kr/app/smeals/id1628112636?platform=iphone"
+              )
+            }
             id="KR"
             xmlns="http://www.w3.org/2000/svg"
             width="129.70071"
@@ -43,12 +48,18 @@ const Home: NextPage = () => {
             </g>
           </svg>
           <svg
+            onClick={() =>
+              open(
+                "https://play.google.com/store/apps/details?id=co.smeals.app"
+              )
+            }
             xmlns="http://www.w3.org/2000/svg"
             width="206.667"
             height="80"
             version="1.1"
             viewBox="0 0 206.667 80"
             xmlSpace="preserve"
+            className="h-[13.5rem] w-[13.5rem]"
           >
             <defs>
               <clipPath id="clipPath28" clipPathUnits="userSpaceOnUse">
