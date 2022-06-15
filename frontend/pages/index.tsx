@@ -4,8 +4,8 @@ const Home: NextPage = () => {
   return (
     <div className="flex flex-col w-full">
       <div className="flex flex-col justify-center items-center px-4 bg-white text-like-black h-screen overflow-hidden py-12">
-        <p className="text-6xl font-bold">급식을 확인하세요</p>
-        <p className="pt-10 text-xl font-medium text-center">
+        <p className="text-[2.6rem] md:text-6xl font-bold">급식을 확인하세요</p>
+        <p className="pt-5 md:pt-10 text-lg md:text-xl font-medium text-center">
           쉽고, 간편히 확인하세요. <br />
           깔끔한 디자인은 당신을 기분좋게 만듭니다.
         </p>
@@ -20,7 +20,7 @@ const Home: NextPage = () => {
             xmlns="http://www.w3.org/2000/svg"
             width="129.70071"
             height="40"
-            className="h-48 w-48"
+            className="h-36 w-36 md:h-48 md:w-48"
             viewBox="0 0 129.70071 40"
           >
             <path
@@ -59,7 +59,7 @@ const Home: NextPage = () => {
             version="1.1"
             viewBox="0 0 206.667 80"
             xmlSpace="preserve"
-            className="h-[13.5rem] w-[13.5rem]"
+            className="w-[10.5rem] md:h-[13.5rem] h-[10.5rem] md:w-[13.5rem]"
           >
             <defs>
               <clipPath id="clipPath28" clipPathUnits="userSpaceOnUse">
