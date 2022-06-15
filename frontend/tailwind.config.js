@@ -13,6 +13,9 @@ module.exports = {
           "sans-serif",
         ],
       },
+      colors: {
+        'like-black': "#121212"
+      }
     },
   },
   plugins: [],
