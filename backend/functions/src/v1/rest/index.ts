@@ -6,7 +6,7 @@ import Meals from "./routes/meals"
 import cors from "@koa/cors"
 
 const app = new Koa()
-const router = new Router({ prefix: "/v1" })
+const router = new Router()
 
 router.get("/schools", Schools)
 router.get("/meals", Meals)

@@ -6,17 +6,8 @@
     "public": "public",
     "rewrites": [
       {
-        "source": "/v1/**",
-        "function": "V1"
-      },
-
-      {
         "source": "/v2/graphql",
         "function": "V2_GRAPHQL"
-      },
-      {
-        "source": "/v2/**",
-        "function": "V2_REST"
       }
     ]
   },
