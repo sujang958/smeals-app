@@ -12,4 +12,5 @@ export default client;
 export const DEFAULT_QUERYS = {
   type: 'json',
   key: process.env.NEIS_KEY as string,
+  pSize: 200,
 };

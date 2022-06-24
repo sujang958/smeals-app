@@ -1,4 +1,4 @@
-import { Controller, Get, Param, Query } from '@nestjs/common';
+import { Controller, Get, Query } from '@nestjs/common';
 import { SchoolsService } from './schools.service.js';
 
 @Controller('schools')
@@ -7,6 +7,6 @@ export class SchoolsController {
 
   @Get('/')
   async getSchools(@Query('query') query?: string) {
-    return this.schoolsService.getSchools(query ?? '교');
+    return this.schoolsService.getSchools(query);
   }
 }

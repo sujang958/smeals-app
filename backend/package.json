@@ -57,15 +57,22 @@
     "typescript": "^4.3.5"
   },
   "jest": {
+    "moduleDirectories": [
+      "node_modules",
+      "src"
+    ],
     "moduleFileExtensions": [
-      "js",
+      "ts",
       "json",
-      "ts"
+      "js"
     ],
     "rootDir": "src",
     "testRegex": ".*\\.spec\\.ts$",
     "transform": {
       "^.+\\.(t|j)s$": "ts-jest"
+    },
+    "moduleNameMapper": {
+      "^(\\.{1,2}/.*)\\.js$": "$1"
     },
     "collectCoverageFrom": [
       "**/*.(t|j)s"

@@ -4,7 +4,7 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { AxiosError } from 'axios';
-import client, { DEFAULT_QUERYS } from 'utils/api';
+import client, { DEFAULT_QUERYS } from '../../utils/api';
 import { SchoolDto } from './dto/school.dto';
 
 // const Got = eval("import('got')"); Lol
@@ -16,7 +16,7 @@ export class SchoolsService {
       const { data } = await client.get('/schoolInfo', {
         params: {
           ...DEFAULT_QUERYS,
-          SCHUL_NM: query,
+          SCHUL_NM: query ?? '교',
         },
       });
 
