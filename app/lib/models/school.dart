@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 const fetchSchoolsUri =
-    "https://asia-northeast3-smeals-school.cloudfunctions.net/meals/schools?name=";
+    "https://asia-northeast3-smeals-school.cloudfunctions.net/v1/schools?name=";
 
 class School {
   final String code;

@@ -55,11 +55,8 @@ class _DetailScreenState extends State<DetailScreen> {
       _fetchMeals();
     });
 
-    return CupertinoPageScaffold(
-      navigationBar: const CupertinoNavigationBar(
-        backgroundColor: Colors.black,
-      ),
-      child: SafeArea(
+    return Scaffold(
+      body: SafeArea(
         maintainBottomViewPadding: true,
         child: RootWidget(
           child: Container(

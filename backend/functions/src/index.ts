@@ -10,6 +10,8 @@ const SERVER_REGION = "asia-northeast3"
 
 export const meals = functions.https.onRequest(V1_RESTServer.callback())
 
+export const pubusb = functions.pubsub.topic('').onPublish
+
 export const v1 = functions
   .region(SERVER_REGION)
   .https.onRequest(V1_RESTServer.callback())
