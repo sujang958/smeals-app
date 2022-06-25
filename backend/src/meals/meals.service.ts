@@ -32,7 +32,7 @@ export class MealsService {
       }
 
       const mealSource = data.mealServiceDietInfo[1].row as any[];
-      console.log(mealSource[0].DDISH_NM);
+
       return {
         meals: mealSource.map((mealSrc) => ({
           kcal: mealSrc.CAL_INFO,
