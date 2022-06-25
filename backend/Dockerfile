@@ -1,5 +1,5 @@
 FROM node:lts-gallium
-  RUN npm i -g yarn
+  RUN npm i --location=global yarn
 
   WORKDIR /backend/
 
