@@ -1,11 +1,12 @@
 import {
+  HttpException,
   Injectable,
   InternalServerErrorException,
   NotFoundException,
 } from '@nestjs/common';
 import { AxiosError } from 'axios';
 import client, { DEFAULT_QUERYS } from '../../utils/api';
-import { SchoolDto } from './dto/school.dto';
+import { SchoolDto } from './entities/school.entities';
 
 // const Got = eval("import('got')"); Lol
 
@@ -34,7 +35,7 @@ export class SchoolsService {
         site: school.HMPG_ADRES,
       }));
     } catch (e) {
-      console.log(e);
+      if (e instanceof HttpException) throw e;
       if (e instanceof AxiosError) {
         throw new NotFoundException('학교를 찾을 수 없어요');
       } else {
