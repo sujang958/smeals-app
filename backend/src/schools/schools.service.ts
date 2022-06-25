@@ -34,6 +34,7 @@ export class SchoolsService {
         site: school.HMPG_ADRES,
       }));
     } catch (e) {
+      console.log(e);
       if (e instanceof AxiosError) {
         throw new NotFoundException('학교를 찾을 수 없어요');
       } else {

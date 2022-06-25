@@ -1,4 +1,3 @@
-import { SchoolDto } from './dto/school.dto';
 import { SchoolsController } from './schools.controller';
 import { SchoolsService } from './schools.service';
 
