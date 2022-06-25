@@ -12,7 +12,7 @@ import { SchoolDto } from './entities/school.entities';
 
 @Injectable()
 export class SchoolsService {
-  async getSchools(query: string): Promise<SchoolDto[]> {
+  async getSchools(query?: string): Promise<SchoolDto[]> {
     try {
       const { data } = await client.get('/schoolInfo', {
         params: {

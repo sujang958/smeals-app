@@ -1,18 +1,17 @@
-import { Test, TestingModule } from '@nestjs/testing';
 import { MealsService } from './meals.service';
 
 describe('MealsService', () => {
   let service: MealsService;
 
   beforeEach(async () => {
-    const module: TestingModule = await Test.createTestingModule({
-      providers: [MealsService],
-    }).compile();
-
-    service = module.get<MealsService>(MealsService);
+    service = new MealsService();
   });
 
   it('should be defined', () => {
     expect(service).toBeDefined();
+  });
+
+  it('should throw an error', () => {
+    expect(service.getMeals('', '', '')).rejects.toThrowError();
   });
 });

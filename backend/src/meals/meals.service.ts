@@ -6,7 +6,7 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { AxiosError } from 'axios';
-import client, { DEFAULT_QUERYS } from 'utils/api';
+import client, { DEFAULT_QUERYS } from '../../utils/api';
 import { Meal } from './entities/meal.entity';
 
 @Injectable()
