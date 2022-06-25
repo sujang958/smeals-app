@@ -1,6 +1,4 @@
 FROM node:lts-gallium
-  RUN npm i --location=global yarn
-
   WORKDIR /backend/
 
   COPY . .
