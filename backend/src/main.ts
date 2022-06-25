@@ -21,3 +21,4 @@ async function bootstrap() {
   await app.listen(3000);
 }
 bootstrap();
+// todo: add google analytics measurement
