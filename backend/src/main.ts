@@ -18,6 +18,12 @@ async function bootstrap() {
       transform: true,
     }),
   );
+
+  process.on('SIGINT', async () => {
+    app.close();
+    process.exit(0);
+  });
+
   await app.listen(3000);
 }
 bootstrap();
