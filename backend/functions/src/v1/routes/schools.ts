@@ -21,7 +21,7 @@ const Schools: RequestHandler = async (req, res) => {
 
     const schools = data.schoolInfo[1].row as any[]
 
-    res.send(
+    return res.send(
       schools.map((school) => ({
         code: school.SD_SCHUL_CODE,
         scCode: school.ATPT_OFCDC_SC_CODE,
@@ -38,7 +38,7 @@ const Schools: RequestHandler = async (req, res) => {
         message: "Can't find schools",
       } as ErrorResponse)
 
-    res.status(500).send({
+    return res.status(500).send({
       ok: false,
       statusCode: 500,
       message: "Something went wrong on the server",
