@@ -1,4 +1,7 @@
 import axios from "axios"
+import { config } from "dotenv"
+
+config({debug: true})
 
 const client = axios.create({
   baseURL: "https://open.neis.go.kr/hub",

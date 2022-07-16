@@ -6,7 +6,10 @@ import Meals from "./routes/meals"
 const V1App = Express()
 
 V1App.use(Cors())
-V1App.use((_, res) => res.set("Content-Type", "application/json"))
+V1App.use((_, res, next) => {
+  res.set("Content-Type", "application/json")
+  next()
+})
 
 V1App.get("/schools", Schools)
 V1App.get("/meals", Meals)
