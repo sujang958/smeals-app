@@ -21,13 +21,15 @@ const Schools: RequestHandler = async (req, res) => {
 
     const schools = data.schoolInfo[1].row as any[]
 
-    return schools.map((school) => ({
-      code: school.SD_SCHUL_CODE,
-      scCode: school.ATPT_OFCDC_SC_CODE,
-      name: school.SCHUL_NM,
-      where: school.ORG_RDNMA,
-      site: school.HMPG_ADRES,
-    }))
+    res.send(
+      schools.map((school) => ({
+        code: school.SD_SCHUL_CODE,
+        scCode: school.ATPT_OFCDC_SC_CODE,
+        name: school.SCHUL_NM,
+        where: school.ORG_RDNMA,
+        site: school.HMPG_ADRES,
+      }))
+    )
   } catch (e) {
     if (e instanceof AxiosError)
       return res.status(404).send({

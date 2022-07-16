@@ -37,7 +37,7 @@ const Meals: RequestHandler = async (req, res) => {
 
     const mealSource = data.mealServiceDietInfo[1].row as any[]
 
-    return {
+    return res.send({
       meals: mealSource.map((mealSrc) => ({
         kcal: mealSrc.CAL_INFO,
         type: mealSrc.MMEAL_SC_NM,
@@ -51,7 +51,7 @@ const Meals: RequestHandler = async (req, res) => {
           .map(([name, value]) => [name.trim(), value.trim()]),
       })),
       schoolName: mealSource[0].ATPT_OFCDC_SC_NM,
-    }
+    })
   } catch (e) {
     if (e instanceof AxiosError)
       return res.status(404).send({
