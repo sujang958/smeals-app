@@ -56,6 +56,7 @@ class _DetailScreenState extends State<DetailScreen> {
     });
 
     return Scaffold(
+      appBar: const CupertinoNavigationBar(border: null, backgroundColor: Colors.black,),
       body: SafeArea(
         maintainBottomViewPadding: true,
         child: RootWidget(
