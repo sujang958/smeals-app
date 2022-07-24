@@ -50,7 +50,7 @@ const Meals: RequestHandler = async (req, res) => {
           .map((ntrSrc) => ntrSrc.split(":"))
           .map(([name, value]) => [name.trim(), value.trim()]),
       })),
-      schoolName: mealSource[0].ATPT_OFCDC_SC_NM,
+      schoolName: mealSource[0].SCHUL_NM,
     })
   } catch (e) {
     if (e instanceof AxiosError)
