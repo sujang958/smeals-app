@@ -34,12 +34,10 @@ class Meal {
     return Meal(
         type: json['type'],
         date: DateTime.parse(json['date']),
-        menu: List.from(json['meal'])
-            .map((e) => e.toString().split("(")[0].trim())
-            .toList(),
-        calories: json['calories'],
-        nutrients: List.from(json['nutrient'])
-            .map((e) => Nutrient(name: e['name'], value: e['value']))
+        menu: List.from(json['dishes']),
+        calories: json['kcal'],
+        nutrients: List.from(json['nutrients'])
+            .map((e) => Nutrient(name: e[0], value: e[1]))
             .toList());
   }
 }

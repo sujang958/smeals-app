@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 const fetchSchoolsUri =
-    "https://asia-northeast3-smeals-school.cloudfunctions.net/v1/schools?name=";
+    "https://asia-northeast3-smeals-school.cloudfunctions.net/v1/schools?query=";
 
 class School {
   final String code;
@@ -33,8 +33,7 @@ Future<List<School>> fetchSchools(String? name) async {
     throw Exception("Can't fetch schools!");
   }
 
-  final json = jsonDecode(response.body);
-  final List<dynamic> jsonSchools = json['schools'];
+  final List<dynamic> json = jsonDecode(response.body);
 
-  return jsonSchools.map((school) => School.fromJson(school)).toList();
+  return json.map((school) => School.fromJson(school)).toList();
 }
